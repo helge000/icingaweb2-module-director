@@ -9,13 +9,28 @@ use Icinga\Module\Director\Import\Sync;
 
 class SyncruleCommand extends Command
 {
+    /**
+     * The DB connection for db()
+     *
+     * @var Db
+     */
     protected $db;
 
+    /**
+     * Run a particular syncrule
+     *
+     * Usage: icingacli director syncrule run <syncrule id>
+     */
     public function runAction()
     {
         Sync::run(SyncRule::load($this->params->shift(), $this->db()));
     }
 
+    /**
+     * Return the DB connection $this->db (create a new one if there isn't any)
+     *
+     * @return Db
+     */
     protected function db()
     {
         if ($this->db === null) {
